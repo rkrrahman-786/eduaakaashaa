@@ -123,23 +123,45 @@ python scrape_josaa_interactive.py --out downloads
 
 ---
 
-## GitHub Pages Configuration
+## GitHub Pages & Render Configuration
 
-The repository is configured for automatic GitHub Pages deployment via:
+The repository is configured for deployment on **Render.com** as a static site:
 
-- **Repository:** `rkrrahman-786/eduaakaashaa`
+- **Repository:** `rkrrahman-786/rkrrahman-786.github.io`
 - **Branch:** `main`
-- **URL:** `https://rkrrahman-786.github.io`
+- **URL:** `https://rkrrahman-786.github.io` (with custom domain)
+- **Platform:** [Render.com](https://render.com) – static site hosting
 
 ### Files
 
-- **`_config.yml`** – Jekyll configuration (theme, plugins, build settings)
-- **`index.html`** – Main page (static HTML, not Jekyll-processed)
-- **`README.md`** – Documentation (displayed on the repo homepage)
+- **`render.yaml`** – Render deployment configuration (no build command needed)
+- **`_config.yml`** – Site metadata and configuration
+- **`index.html`** – Main page (served as static HTML)
+- **`README.md`** – Documentation
 
 ### Deployment
 
-Commits to the `main` branch automatically trigger a GitHub Pages build. The site updates within seconds.
+1. **Connect your GitHub repo to Render:**
+   - Go to [Render Dashboard](https://dashboard.render.com)
+   - Click "New +" → "Static Site"
+   - Select your GitHub repository: `rkrrahman-786/rkrrahman-786.github.io`
+   - Set **Branch:** `main`
+   - Set **Publish Directory:** `./` (root)
+   - Leave **Build Command:** empty (no build needed for static HTML)
+   - Click "Deploy"
+
+2. **Auto-deploy on push:**
+   - Every commit to the `main` branch automatically triggers a deploy
+   - Site updates within 1-2 minutes
+
+3. **Custom domain (optional):**
+   - In Render dashboard, go to your static site
+   - Settings → Custom Domain → Add `rkrrahman-786.github.io`
+   - Update DNS records as instructed by Render
+
+### Render Dashboard Link
+
+[View your site on Render](https://dashboard.render.com)
 
 ---
 

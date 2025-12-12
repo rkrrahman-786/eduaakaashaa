@@ -1,0 +1,18 @@
+services:
+  - type: static_site
+    name: rkrrahman-786.github.io
+    repo: https://github.com/rkrrahman-786/rkrrahman-786.github.io.git
+    branch: main
+    buildCommand: ""  # No build needed for static HTML
+    staticPublishPath: ./
+    envVars: []
+    routes:
+      - path: /
+        priority: 0
+    headers:
+      - path: /
+        name: Cache-Control
+        value: max-age=3600
+      - path: /assets
+        name: Cache-Control
+        value: max-age=31536000

@@ -1,12 +1,13 @@
-# Jekyll & GitHub Pages Configuration
-# Repository: rkrrahman-786/eduaakaashaa
-# Site URL: https://rkrrahman-786.github.io
+# Render Static Site Configuration
+# Repository: rkrrahman-786/rkrrahman-786.github.io
+# Site URL: https://rkrrahman-786.github.io (custom domain) or Render-provided URL
+# Deployed on: Render.com
 
 # Site metadata
 title: JOSAA Seat Allotment Scraper & Results Viewer
 description: Interactive web tool to browse and scrape JOSAA seat allotment results. Includes automated Python scraper for PDF downloads per round.
 url: https://rkrrahman-786.github.io
-baseurl: ""  # If hosting at subdomain, set to "/reponame" — e.g., "/eduaakaashaa"
+baseurl: ""
 
 # Repository
 repository: rkrrahman-786/eduaakaashaa
