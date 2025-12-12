@@ -72,5 +72,5 @@ yarn-error.log
 
 # Misc
 *.log
-*.csv
+# *.csv  (Allow events.csv for dynamic event management)
 *.xlsx
