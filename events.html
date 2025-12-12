@@ -510,6 +510,20 @@
   <script>
     let eventsData = [];
 
+    // Fallback CSV data (embedded as backup)
+    const FALLBACK_CSV = `date,title,time,description,speakers,mode,duration,type,category
+Dec 15 2025,JOSAA Seat Allotment Decoded,2:00 PM - 3:30 PM IST,Understand the complete JOSAA seat allotment process ranking system and strategies to maximize your chances of getting your dream seat.,IIT Counselors,Online (Zoom),90 minutes,Webinar,JOSAA
+Dec 22 2025,NRI Quota: Myths vs Reality,10:00 AM - 11:30 AM IST,Exclusive session on NRI admissions quota eligibility criteria and step-by-step process for NRI applicants applying to premier institutes.,Admissions Directors,Online (Teams),90 minutes,Seminar,NRI
+Dec 29 2025,Engineering Cutoff Trends Analysis,4:00 PM - 5:30 PM IST,Deep dive into 5-year cutoff trends across IITs NITs and IIEST. Learn how to predict cutoffs and make informed choices.,Data Analysts,Online + In-Person,90 minutes,Workshop,Trends
+Jan 10 2026,Career Pathways in Engineering,6:00 PM - 7:30 PM IST,Industry experts and alumni share insights on career opportunities placements and entrepreneurship in the tech sector.,Industry Leaders & Alumni,Online,90 minutes,Panel Discussion,Career
+Jan 18 2026,JEE Advanced Preparation Strategy,3:00 PM - 4:30 PM IST,Master advanced problem-solving techniques and time management strategies for JEE Advanced with expert coaches.,JEE Advanced Toppers,Online (Zoom),90 minutes,Workshop,JEE
+Jan 25 2026,International NRI Student Panel,5:00 PM - 6:30 PM IST,Hear directly from NRI students studying at IITs and NITs about their experiences admission journey and campus life.,Current NRI Students,Online,90 minutes,Panel Discussion,Student Stories
+Feb 1 2026,BITSAT and VITEEE Masterclass,2:00 PM - 3:30 PM IST,Comprehensive guide to BITSAT and VITEEE entrance exams with shortcuts and exam strategies from expert mentors.,BITSAT Experts,Online (Teams),90 minutes,Webinar,Engineering Tests
+Feb 8 2026,Scholarship and Financial Aid Guide,4:00 PM - 5:30 PM IST,Complete overview of scholarships financial aid and funding options available for NRI engineering students in India.,Financial Counselors,Online (Zoom),90 minutes,Seminar,Financial Aid
+Feb 15 2026,Hostel Life and Campus Culture,6:00 PM - 7:30 PM IST,Get insights into campus facilities hostel life cultural activities and student organizations at top engineering colleges.,College Administrators,Online,90 minutes,Webinar,Campus Life
+Feb 22 2026,Internship and Placement Opportunities,3:00 PM - 4:30 PM IST,Explore internship opportunities during your engineering degree and how to prepare for placements at premier companies.,Placement Officers,Online + In-Person,90 minutes,Workshop,Career
+Mar 1 2026,Research and Innovation at IITs,5:00 PM - 6:30 PM IST,Learn about research opportunities innovation labs and how to pursue research during your engineering studies.,IIT Professors,Online (Zoom),90 minutes,Webinar,Research`;
+
     // Parse CSV data
     function parseCSV(csv) {
       const lines = csv.trim().split('\n');
@@ -531,14 +545,49 @@
     // Load and process CSV file
     async function loadEvents() {
       try {
-        const response = await fetch('events.csv');
-        const csvText = await response.text();
+        // Try multiple paths to find the CSV file
+        const paths = [
+          'events.csv',
+          '/events.csv',
+          window.location.origin + '/events.csv'
+        ];
+        
+        let csvText = null;
+        
+        for (const path of paths) {
+          try {
+            const response = await fetch(path, { cache: 'no-cache' });
+            if (response.ok) {
+              csvText = await response.text();
+              console.log(`✓ CSV loaded from: ${path}`);
+              break;
+            }
+          } catch (e) {
+            console.log(`✗ Failed to load from ${path}:`, e.message);
+          }
+        }
+        
+        // Use fallback CSV if fetch fails
+        if (!csvText) {
+          console.warn('⚠ Using fallback embedded CSV data');
+          csvText = FALLBACK_CSV;
+        }
+        
         eventsData = parseCSV(csvText);
+        console.log(`✓ Parsed ${eventsData.length} events from CSV`);
         
         renderEvents();
         populateEventDropdown();
       } catch (error) {
         console.error('Error loading events:', error);
+        // Display error message on page
+        const container = document.getElementById('eventsContainer');
+        container.innerHTML = `
+          <div style="grid-column: 1/-1; padding: 40px; text-align: center; background: rgba(255, 100, 100, 0.1); border-radius: 8px; border: 1px solid rgba(255, 100, 100, 0.3);">
+            <h3 style="color: #ff6b6b; margin-top: 0;">⚠ Error Loading Events</h3>
+            <p style="color: #ccc; margin-bottom: 0;">${error.message}</p>
+          </div>
+        `;
       }
     }
 

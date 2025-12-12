@@ -82,10 +82,26 @@
   <script>
     async function loadAndTestEvents() {
       try {
-        const response = await fetch('events.csv');
-        if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
+        // Try multiple paths
+        const paths = ['events.csv', '/events.csv', window.location.origin + '/events.csv'];
+        let response = null;
+        let csvText = null;
         
-        const csvText = await response.text();
+        for (const path of paths) {
+          try {
+            response = await fetch(path, { cache: 'no-cache' });
+            if (response.ok) {
+              csvText = await response.text();
+              console.log(`CSV loaded from: ${path}`);
+              break;
+            }
+          } catch (e) {
+            console.log(`Failed to load from ${path}`);
+          }
+        }
+        
+        if (!csvText) throw new Error('Could not load events.csv');
+        
         document.getElementById('csvContent').textContent = csvText;
         
         // Parse CSV
