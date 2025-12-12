@@ -1,0 +1,92 @@
+# Jekyll & GitHub Pages Configuration
+# Repository: rkrrahman-786/eduaakaashaa
+# Site URL: https://rkrrahman-786.github.io
+
+# Site metadata
+title: JOSAA Seat Allotment Scraper & Results Viewer
+description: Interactive web tool to browse and scrape JOSAA seat allotment results. Includes automated Python scraper for PDF downloads per round.
+url: https://rkrrahman-786.github.io
+baseurl: ""  # If hosting at subdomain, set to "/reponame" — e.g., "/eduaakaashaa"
+
+# Repository
+repository: rkrrahman-786/eduaakaashaa
+github:
+  repository_url: https://github.com/rkrrahman-786/eduaakaashaa
+
+# Author
+author:
+  name: rkrrahman-786
+  email: contact@example.com
+  github: rkrrahman-786
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+theme: minima
+
+# Plugins (GitHub Pages compatible)
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+
+# Exclude from build
+exclude:
+  - .venv/
+  - .git/
+  - .gitignore
+  - .gitattributes
+  - Gemfile
+  - Gemfile.lock
+  - vendor/
+  - node_modules/
+  - *.pyc
+  - __pycache__/
+  - .pytest_cache/
+  - downloads/
+  - scrape_josaa_interactive.py
+  - requirements.txt
+
+# Keep files
+keep_files:
+  - .github
+  - downloads
+
+# Sass configuration
+sass:
+  sass_dir: _sass
+  style: compressed
+
+# Liquid settings
+liquid:
+  error_mode: lax
+
+# Front matter defaults
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: default
+
+# Timezone
+timezone: Asia/Kolkata
+
+# Permalink style
+permalink: /:title/
+
+# Pagination (if using jekyll-paginate)
+paginate: 10
+paginate_path: /page:num/
+
+# Collections
+collections:
+  docs:
+    output: true
+    permalink: /docs/:path/
+
+# SEO optimization
+google_analytics: ""  # Add your Google Analytics ID if needed
+
+# Security & performance
+safe: true
+lsi: false
+incremental: true
